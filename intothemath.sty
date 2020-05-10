@@ -14,6 +14,32 @@
 \RequirePackage{slashbox}
 \RequirePackage{ulem} %% for better-looking stirke
 \RequirePackage[c]{esvect} %%%%%%% for better-looking vector arrow
+\RequirePackage{tabu}
+% tabu-fix
+% to make "spread 0pt" work
+% -----------------------------
+\makeatletter
+\patchcmd
+	\tabu@startpboxmeasure
+	{\bgroup\begin{varwidth}}%
+	{\bgroup
+	 \iftabu@spread\color@begingroup\fi\begin{varwidth}}%
+	{}{}
+\def\@tabarray{\m@th\def\tabu@currentgrouptype
+    {\currentgrouptype}\@ifnextchar[\@array{\@array[c]}}
+%
+%%% \pdfelapsedtime bug 2019-12-15
+\patchcmd
+	\tabu@message@etime
+	{\the\pdfelapsedtime}%
+	{\pdfelapsedtime}%
+	{}{}
+%
+%
+\makeatother
+% -----------------------------
+ 
+
 \renewcommand{\vec}[1]{\vv{#1}}
 \let\nvec\vec
 \let\nsqrt\sqrt
